@@ -9,7 +9,7 @@ from datetime import datetime
 async def any_number(message: types.Message):
     try:
         date = datetime.now()
-        link = f"https://mtkspb.ru/public/educational/schedule/Расписание%20{message.text:0>2}.{date.month:0>2}.{date.year}.pdf"
+        link = f"https://mtkspb.ru/public/educational/schedule/Расписание%20{message.text:0>2}-{date.month:0>2}-{date.year}.pdf"
         response = requests.get(link) # отправка HTTP GET запроса на сайт
         # полученные данные сохраняются в PDF
         pdf = open("pdf.pdf", 'wb')

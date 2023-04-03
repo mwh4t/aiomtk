@@ -5,6 +5,7 @@ from aiogram.dispatcher.filters import Command
 from loader import dp
 from states import fb_states
 import logging # предоставляет способ записи сообщений в файл или консоль
+from keyboards.inline import ikb_fb
 from data.config import admins
 import random
 from handlers.users.errors import errors
@@ -13,8 +14,7 @@ from utils.misc import rate_limit
 @rate_limit(limit=10)
 @dp.message_handler(Command('fb'))
 async def fb(message: types.Message):
-    markup = InlineKeyboardMarkup().add(InlineKeyboardButton('Отмена', callback_data='cancel'))
-    await message.answer('Напишите, что хотите отправить автору', reply_markup=markup)
+    await message.answer('Напишите, что хотите отправить автору', reply_markup=ikb_fb)
     await fb_states.waiting_for_fb.set() # устанавливает состояние диалога в waiting_for_fb
 
 @dp.callback_query_handler(text='cancel', state=fb_states.waiting_for_fb)

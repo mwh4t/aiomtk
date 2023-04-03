@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 @dp.message_handler(text='Вчера')
 async def btn_yesterday(message: types.Message):
     try:
-        date = str(datetime.strftime(datetime.now() - timedelta(1), '%d.%m.%Y'))
+        date = str(datetime.strftime(datetime.now() - timedelta(1), '%d-%m-%Y'))
         link = f"https://mtkspb.ru/public/educational/schedule/Расписание%20{date}.pdf"
         response = requests.get(link) # отправка HTTP GET запроса на сайт
         # полученные данные сохраняются в PDF
@@ -30,7 +30,7 @@ async def btn_yesterday(message: types.Message):
 @dp.message_handler(text='Сегодня')
 async def btn_today(message: types.Message):
     try:
-        date = str(datetime.strftime(datetime.now(), '%d.%m.%Y'))
+        date = str(datetime.strftime(datetime.now(), '%d-%m-%Y'))
         link = f"https://mtkspb.ru/public/educational/schedule/Расписание%20{date}.pdf"
         response = requests.get(link) # отправка HTTP GET запроса на сайт
         # полученные данные сохраняются в PDF
@@ -53,7 +53,7 @@ async def btn_today(message: types.Message):
 @dp.message_handler(text='Завтра')
 async def btn_tomorrow(message: types.Message):
     try:
-        date = str(datetime.strftime(datetime.now() + timedelta(1), '%d.%m.%Y'))
+        date = str(datetime.strftime(datetime.now() + timedelta(1), '%d-%m-%Y'))
         link = f"https://mtkspb.ru/public/educational/schedule/Расписание%20{date}.pdf"
         response = requests.get(link) # отправка HTTP GET запроса на сайт
         # полученные данные сохраняются в PDF
