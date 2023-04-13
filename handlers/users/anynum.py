@@ -1,4 +1,5 @@
 from aiogram import types
+from aiogram.types import ChatActions
 from loader import dp
 import requests # либа для выполнения HTTP-запросов
 import fitz # либа для работы с PDF
@@ -17,6 +18,7 @@ async def any_number(message: types.Message):
     response3 = requests.get(link3) # отправка HTTP GET запроса на сайт
     response4 = requests.get(link4) # отправка HTTP GET запроса на сайт
     if response1.status_code == 200 and response2.status_code == 200 and response3.status_code == 404 and response4.status_code == 404:
+        await message.answer_chat_action(ChatActions.UPLOAD_PHOTO)
         # полученные данные сохраняются в PDF
         pdf = open("pdf.pdf", 'wb')
         pdf.write(response2.content)
@@ -32,6 +34,7 @@ async def any_number(message: types.Message):
         img = open("page.png", 'rb')
         await message.answer_photo(photo=img, caption='@mtkspbbot')
     elif response1.status_code == 200 and response2.status_code == 404 and response3.status_code == 404 and response4.status_code == 404:
+        await message.answer_chat_action(ChatActions.UPLOAD_PHOTO)
         # полученные данные сохраняются в PDF
         pdf = open("pdf.pdf", 'wb')
         pdf.write(response1.content)
@@ -47,6 +50,7 @@ async def any_number(message: types.Message):
         img = open("page.png", 'rb')
         await message.answer_photo(photo=img, caption='@mtkspbbot')
     elif response1.status_code == 404 and response2.status_code == 404 and response3.status_code == 200 and response4.status_code == 200:
+        await message.answer_chat_action(ChatActions.UPLOAD_PHOTO)
         # полученные данные сохраняются в PDF
         pdf = open("pdf.pdf", 'wb')
         pdf.write(response4.content)
@@ -62,6 +66,7 @@ async def any_number(message: types.Message):
         img = open("page.png", 'rb')
         await message.answer_photo(photo=img, caption='@mtkspbbot')
     elif response1.status_code == 404 and response2.status_code == 404 and response3.status_code == 200 and response4.status_code == 404:
+        await message.answer_chat_action(ChatActions.UPLOAD_PHOTO)
         # полученные данные сохраняются в PDF
         pdf = open("pdf.pdf", 'wb')
         pdf.write(response3.content)
@@ -77,4 +82,5 @@ async def any_number(message: types.Message):
         img = open("page.png", 'rb')
         await message.answer_photo(photo=img, caption='@mtkspbbot')
     else:
+        await message.answer_chat_action('typing')
         await message.answer('Ничего не найдено!')
