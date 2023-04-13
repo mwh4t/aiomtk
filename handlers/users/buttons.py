@@ -7,6 +7,7 @@ from datetime import datetime, timedelta
 
 @dp.message_handler(text='Вчера')
 async def btn_yesterday(message: types.Message):
+    await message.answer_chat_action('typing')
     date1 = str(datetime.strftime(datetime.now() - timedelta(1), '%d.%m.%Y'))
     date2 = str(datetime.strftime(datetime.now() - timedelta(1), '%d-%m-%Y'))
     date3 = str(datetime.strftime(datetime.now() - timedelta(1), '%d.%m.%Y'))
@@ -89,6 +90,7 @@ async def btn_yesterday(message: types.Message):
 
 @dp.message_handler(text='Сегодня')
 async def btn_today(message: types.Message):
+    await message.answer_chat_action('typing')
     date1 = str(datetime.strftime(datetime.now(), '%d.%m.%Y'))
     date2 = str(datetime.strftime(datetime.now(), '%d-%m-%Y'))
     date3 = str(datetime.strftime(datetime.now(), '%d.%m.%Y'))
@@ -171,6 +173,7 @@ async def btn_today(message: types.Message):
 
 @dp.message_handler(text='Завтра')
 async def btn_tomorrow(message: types.Message):
+    await message.answer_chat_action('typing')
     date1 = str(datetime.strftime(datetime.now() + timedelta(1), '%d.%m.%Y'))
     date2 = str(datetime.strftime(datetime.now() + timedelta(1), '%d-%m-%Y'))
     date3 = str(datetime.strftime(datetime.now() + timedelta(1), '%d.%m.%Y'))

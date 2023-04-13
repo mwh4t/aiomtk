@@ -8,6 +8,7 @@ from datetime import datetime
 # handler будет запущен, если сообщение содержит только цифры
 @dp.message_handler(lambda message: message.text.isdigit())
 async def any_number(message: types.Message):
+    await message.answer_chat_action('typing')
     date = datetime.now()
     link1 = f"https://mtkspb.ru/public/educational/Расписание%20{message.text:0>2}.{date.month:0>2}.{date.year}.pdf"
     link2 = f"https://mtkspb.ru/public/educational/Расписание%20{message.text:0>2}-{date.month:0>2}-{date.year}.pdf"
