@@ -31,22 +31,23 @@ async def btn_yesterday(message: types.Message):
     link2 = f"https://mtkspb.ru/public/educational/Расписание%20{date2}.pdf"
     link3 = f"https://mtkspb.ru/public/educational/schedule/Расписание%20{date3}.pdf"
     link4 = f"https://mtkspb.ru/public/educational/schedule/Расписание%20{date4}.pdf"
-    response1 = requests.get(link1) # отправка HTTP GET запроса на сайт
-    response2 = requests.get(link2) # отправка HTTP GET запроса на сайт
-    response3 = requests.get(link3) # отправка HTTP GET запроса на сайт
-    response4 = requests.get(link4) # отправка HTTP GET запроса на сайт
+# отправка запросов на сайт
+    response1 = requests.get(link1)
+    response2 = requests.get(link2)
+    response3 = requests.get(link3)
+    response4 = requests.get(link4)
     if (response1.status_code == 200 and response2.status_code == 200 and
             response3.status_code == 404 and response4.status_code == 404):
         await handle_pdf(message, response2)
-    elif (response1.status_code == 200 and response2.status_code == 404 and
+    elif (response1.status_code == 404 and response2.status_code == 200 and
           response3.status_code == 404 and response4.status_code == 404):
-        await handle_pdf(message, response1)
+        await handle_pdf(message, response2)
     elif (response1.status_code == 404 and response2.status_code == 404 and
           response3.status_code == 200 and response4.status_code == 200):
         await handle_pdf(message, response4)
     elif (response1.status_code == 404 and response2.status_code == 404 and
-          response3.status_code == 200 and response4.status_code == 404):
-        await handle_pdf(message, response3)
+          response3.status_code == 404 and response4.status_code == 200):
+        await handle_pdf(message, response4)
     else:
         await message.answer_chat_action('typing')
         await message.answer('Ничего не найдено!')
@@ -60,22 +61,23 @@ async def btn_today(message: types.Message):
     link2 = f"https://mtkspb.ru/public/educational/Расписание%20{date2}.pdf"
     link3 = f"https://mtkspb.ru/public/educational/schedule/Расписание%20{date3}.pdf"
     link4 = f"https://mtkspb.ru/public/educational/schedule/Расписание%20{date4}.pdf"
-    response1 = requests.get(link1) # отправка HTTP GET запроса на сайт
-    response2 = requests.get(link2) # отправка HTTP GET запроса на сайт
-    response3 = requests.get(link3) # отправка HTTP GET запроса на сайт
-    response4 = requests.get(link4) # отправка HTTP GET запроса на сайт
+# отправка запросов на сайт
+    response1 = requests.get(link1)
+    response2 = requests.get(link2)
+    response3 = requests.get(link3)
+    response4 = requests.get(link4)
     if (response1.status_code == 200 and response2.status_code == 200 and
             response3.status_code == 404 and response4.status_code == 404):
         await handle_pdf(message, response2)
-    elif (response1.status_code == 200 and response2.status_code == 404 and
+    elif (response1.status_code == 404 and response2.status_code == 200 and
           response3.status_code == 404 and response4.status_code == 404):
-        await handle_pdf(message, response1)
+        await handle_pdf(message, response2)
     elif (response1.status_code == 404 and response2.status_code == 404 and
           response3.status_code == 200 and response4.status_code == 200):
         await handle_pdf(message, response4)
     elif (response1.status_code == 404 and response2.status_code == 404 and
-          response3.status_code == 200 and response4.status_code == 404):
-        await handle_pdf(message, response3)
+          response3.status_code == 404 and response4.status_code == 200):
+        await handle_pdf(message, response4)
     else:
         await message.answer_chat_action('typing')
         await message.answer('Ничего не найдено!')
@@ -83,28 +85,29 @@ async def btn_today(message: types.Message):
 @dp.message_handler(text='Завтра')
 async def btn_tomorrow(message: types.Message):
     await message.answer_chat_action('typing')
-    date1 = date3 = str(datetime.strftime(datetime.now() + timedelta(1), '%d.%m.%Y'))
-    date2 = date4 = str(datetime.strftime(datetime.now() + timedelta(1), '%d-%m-%Y'))
-    link1 = f"https://mtkspb.ru/public/educational/Расписание%20{date1}.pdf"
-    link2 = f"https://mtkspb.ru/public/educational/Расписание%20{date2}.pdf"
+    date1 = date3 = str(datetime.strftime(datetime.now() + timedelta(1), '%d.%m.%y'))
+    date2 = date4 = str(datetime.strftime(datetime.now() + timedelta(1), '%d-%m-%y'))
+    link1 = f"https://mtkspb.ru/public/educational/schedule/Расписание%2{date1}.pdf"
+    link2 = f"https://mtkspb.ru/public/educational/schedule/Расписание%2{date2}.pdf"
     link3 = f"https://mtkspb.ru/public/educational/schedule/Расписание%20{date3}.pdf"
     link4 = f"https://mtkspb.ru/public/educational/schedule/Расписание%20{date4}.pdf"
-    response1 = requests.get(link1) # отправка HTTP GET запроса на сайт
-    response2 = requests.get(link2) # отправка HTTP GET запроса на сайт
-    response3 = requests.get(link3) # отправка HTTP GET запроса на сайт
-    response4 = requests.get(link4) # отправка HTTP GET запроса на сайт
+# отправка запросов на сайт
+    response1 = requests.get(link1)
+    response2 = requests.get(link2)
+    response3 = requests.get(link3)
+    response4 = requests.get(link4)
     if (response1.status_code == 200 and response2.status_code == 200 and
             response3.status_code == 404 and response4.status_code == 404):
         await handle_pdf(message, response2)
-    elif (response1.status_code == 200 and response2.status_code == 404 and
+    elif (response1.status_code == 404 and response2.status_code == 200 and
           response3.status_code == 404 and response4.status_code == 404):
-        await handle_pdf(message, response1)
+        await handle_pdf(message, response2)
     elif (response1.status_code == 404 and response2.status_code == 404 and
           response3.status_code == 200 and response4.status_code == 200):
         await handle_pdf(message, response4)
     elif (response1.status_code == 404 and response2.status_code == 404 and
-          response3.status_code == 200 and response4.status_code == 404):
-        await handle_pdf(message, response3)
+          response3.status_code == 404 and response4.status_code == 200):
+        await handle_pdf(message, response4)
     else:
         await message.answer_chat_action('typing')
         await message.answer('Ничего не найдено!')
