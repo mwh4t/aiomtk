@@ -58,9 +58,8 @@ async def download_and_convert_pdfs(url):
                         pdf_content = await pdf_response.read()
                         with open(pdf_filename, 'wb') as pdf_file:
                             pdf_file.write(pdf_content)
-
                         # конвертирование PDF в PNG
-                        dpi = 200
+                        dpi = 100
                         zoom = dpi / 72
                         magnify = fitz.Matrix(zoom, zoom)
                         pdf_document = fitz.open(pdf_filename)

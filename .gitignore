@@ -180,3 +180,5 @@ fabric.properties
 
 .idea
 .DS_Store
+pdf_files
+png_files

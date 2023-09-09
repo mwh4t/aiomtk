@@ -4,8 +4,10 @@ from loader import dp
 from datetime import datetime, timedelta
 import asyncio
 import os
+from utils.misc import rate_limit
 
 
+@rate_limit(limit=10)
 @dp.message_handler(text='Вчера')
 async def btn_yesterday(message: types.Message):
     date1 = str(datetime.strftime(datetime.now() - timedelta(1), '%d.%m.%Y'))
@@ -35,6 +37,7 @@ async def btn_yesterday(message: types.Message):
         await message.answer("Ничего не найдено!")
 
 
+@rate_limit(limit=10)
 @dp.message_handler(text='Сегодня')
 async def btn_today(message: types.Message):
     date1 = str(datetime.strftime(datetime.now(), '%d.%m.%Y'))
@@ -64,6 +67,7 @@ async def btn_today(message: types.Message):
         await message.answer("Ничего не найдено!")
 
 
+@rate_limit(limit=10)
 @dp.message_handler(text='Завтра')
 async def btn_tomorrow(message: types.Message):
     date1 = str(datetime.strftime(datetime.now() + timedelta(1), '%d.%m.%Y'))
