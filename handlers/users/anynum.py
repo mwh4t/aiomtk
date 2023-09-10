@@ -16,7 +16,7 @@ async def any_number(message: types.Message):
         f"png_files/Расписание%2{message.text:0>2}.{date.month:0>2}.{date.year % 100}.png",
         f"png_files/Расписание%20{message.text:0>2}-{date.month:0>2}-{date.year}.pdf",
         f"png_files/Расписание%20{message.text:0>2}-{date.month:0>2}-{date.year % 100}.pdf",
-        f"png_files/Расписание%20{message.text:0>2}-{date.month:0>2}-{date.year % 100}.pdf"
+        f"png_files/Расписание%2{message.text:0>2}-{date.month:0>2}-{date.year % 100}.pdf"
     ]
 
     for filename in filenames:
