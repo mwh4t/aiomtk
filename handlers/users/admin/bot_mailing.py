@@ -45,7 +45,7 @@ async def start(call: types.CallbackQuery, state: FSMContext):
             sent_messages_count += 1  # увеличение счётчика успешных сообщений
         except Exception:
             pass
-    await call.message.answer(f'Рассылка выполнена! Дошла до {sent_messages_count} человек.')
+    await call.message.answer(f'Рассылка выполнена <i>(для {sent_messages_count} пользователей)</i>!')
 
 
 @dp.callback_query_handler(text='add_photo', state=bot_mailing.state, chat_id=admins)
@@ -86,7 +86,7 @@ async def start(call: types.CallbackQuery, state: FSMContext):
             sent_messages_count += 1  # увеличение счётчика успешных сообщений
         except Exception:
             pass
-    await call.message.answer(f'Рассылка выполнена! Дошла до {sent_messages_count} человек.')
+    await call.message.answer(f'Рассылка выполнена <i>(для {sent_messages_count} пользователей)</i>!')
 
 
 @dp.message_handler(state=bot_mailing.text, chat_id=admins)

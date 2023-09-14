@@ -1,6 +1,5 @@
 import logging  # предоставляет способ записи сообщений в файл или консоль
 from aiogram import types
-from aiogram.dispatcher.filters import Command
 from aiogram.types import CallbackQuery
 from keyboards.default import kb_start
 from keyboards.inline import ikb_start
@@ -27,7 +26,7 @@ async def menu(message: types.Message):
     await message.answer('Подскажи, пожалуйста, какой тебя интересует день?', reply_markup=kb_start)
 
 
-@dp.callback_query_handler(text='Инфо')
+@dp.callback_query_handler(text='info')
 async def menu(call: CallbackQuery):
     await call.answer('• Бот не является официальным\n'
                       '• Бот доступен только в ЛС\n'
