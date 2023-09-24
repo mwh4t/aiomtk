@@ -21,7 +21,13 @@ async def btn_yesterday(message: types.Message):
         f"png_files/Расписание%2{date3}.png",
         f"png_files/Расписание%20{date4}.png",
         f"png_files/Расписание%20{date5}.png",
-        f"png_files/Расписание%2{date6}.png"
+        f"png_files/Расписание%2{date6}.png",
+        f"png_files/Расписание%20на%20{date1}.png",
+        f"png_files/Расписание%20на%20{date2}.png",
+        f"png_files/Расписание%20на%2{date3}.png",
+        f"png_files/Расписание%20на%20{date4}.png",
+        f"png_files/Расписание%20на%20{date5}.png",
+        f"png_files/Расписание%20на%2{date6}.png"
     ]
 
     for filename in filenames:
@@ -51,7 +57,13 @@ async def btn_today(message: types.Message):
         f"png_files/Расписание%2{date3}.png",
         f"png_files/Расписание%20{date4}.png",
         f"png_files/Расписание%20{date5}.png",
-        f"png_files/Расписание%2{date6}.png"
+        f"png_files/Расписание%2{date6}.png",
+        f"png_files/Расписание%20на%20{date1}.png",
+        f"png_files/Расписание%20на%20{date2}.png",
+        f"png_files/Расписание%20на%2{date3}.png",
+        f"png_files/Расписание%20на%20{date4}.png",
+        f"png_files/Расписание%20на%20{date5}.png",
+        f"png_files/Расписание%20на%2{date6}.png"
     ]
 
     for filename in filenames:
@@ -81,7 +93,13 @@ async def btn_tomorrow(message: types.Message):
         f"png_files/Расписание%2{date3}.png",
         f"png_files/Расписание%20{date4}.png",
         f"png_files/Расписание%20{date5}.png",
-        f"png_files/Расписание%2{date6}.png"
+        f"png_files/Расписание%2{date6}.png",
+        f"png_files/Расписание%20на%20{date1}.png",
+        f"png_files/Расписание%20на%20{date2}.png",
+        f"png_files/Расписание%20на%2{date3}.png",
+        f"png_files/Расписание%20на%20{date4}.png",
+        f"png_files/Расписание%20на%20{date5}.png",
+        f"png_files/Расписание%20на%2{date6}.png"
     ]
 
     for filename in filenames:
