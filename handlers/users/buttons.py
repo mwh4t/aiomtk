@@ -99,7 +99,13 @@ async def btn_tomorrow(message: types.Message):
         f"png_files/Расписание%20на%2{date3}.png",
         f"png_files/Расписание%20на%20{date4}.png",
         f"png_files/Расписание%20на%20{date5}.png",
-        f"png_files/Расписание%20на%2{date6}.png"
+        f"png_files/Расписание%20на%2{date6}.png",
+        f"png_files/Расписание%20на%20{date1}-1.png",
+        f"png_files/Расписание%20на%20{date2}-1.png",
+        f"png_files/Расписание%20на%2{date3}-1.png",
+        f"png_files/Расписание%20на%20{date4}-1.png",
+        f"png_files/Расписание%20на%20{date5}-1.png",
+        f"png_files/Расписание%20на%2{date6}-1.png"
     ]
 
     for filename in filenames:
