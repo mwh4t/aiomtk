@@ -4,6 +4,8 @@ import os
 import fitz
 import asyncio
 import datetime
+from art import tprint
+from tqdm import tqdm
 
 
 async def on_startup(dp):
@@ -13,12 +15,13 @@ async def on_startup(dp):
     from loader import db
     from utils.db_api.db_gino import on_startup
 
+    tprint("aiomtk")
+
     print('Подключение к PostgreSQL...')
     await on_startup(db)
 
     print('Создание таблиц...')
     await db.gino.create_all()
-    print('Готово!')
 
     from utils.notify_admins import on_startup_notify
     await on_startup_notify(dp)
@@ -48,7 +51,8 @@ async def download_and_convert_pdfs(url):
             text = await response.text()
             matches = pattern.findall(text)
 
-            for pdf_link in matches:
+            for pdf_link in tqdm(matches, desc="Начало загрузки расписания",
+                                 bar_format="{desc}: {percentage:3.0f}%|{bar}|{n_fmt}/{total_fmt}"):
                 full_pdf_url = f"https://mtkspb.ru{pdf_link}"
 
                 async with session.get(full_pdf_url) as pdf_response:
@@ -76,8 +80,6 @@ async def download_and_convert_pdfs(url):
 async def repeat_actions():
     while True:
         url_to_scrape = "https://mtkspb.ru/public/educational/schedule/index.php"
-        await asyncio.sleep(3)
-        print("Начало загрузки расписания...")
 
         # удаление старых PNG
         png_folder = 'png_files'
