@@ -90,7 +90,7 @@ async def repeat_actions():
 
         await download_and_convert_pdfs(url_to_scrape)
         current_datetime = datetime.datetime.now()
-        formatted_datetime = "(" + current_datetime.strftime("%H:%M:%S") + ")"
+        formatted_datetime = "(" + current_datetime.strftime("%H:%M") + ")"
         print("Конец загрузки!", formatted_datetime)
 
         # задержка в 4 часа

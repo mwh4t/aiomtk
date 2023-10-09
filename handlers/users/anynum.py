@@ -4,12 +4,20 @@ from loader import dp
 from datetime import datetime
 import os
 import asyncio
+import locale
+
+locale.setlocale(locale.LC_TIME, 'ru_RU.UTF-8')
 
 
 # handler будет запущен, если сообщение содержит только цифры
 @dp.message_handler(lambda message: message.text.isdigit())
 async def any_number(message: types.Message):
+    user_day = int(message.text)
+
     date = datetime.now()
+    selected_date = date.replace(day=user_day)
+    week = selected_date.strftime("%A")
+
     next_month_day = 1
     next_month = date.replace(month=date.month + 1, day=next_month_day)
     if date.month == 12:
@@ -57,16 +65,39 @@ async def any_number(message: types.Message):
         f"png_files/Расписание%20на%2{message.text:0>2}-{next_month.month:0>2}-{date.year % 100}-1.png"
     ]
 
-    filenames.extend(next_month_filenames)
+    file_found = False  # флаг для проверки, был ли найден файл
 
     for filename in filenames:
         if os.path.exists(filename):
             with open(filename, 'rb') as img:
                 await message.answer_chat_action(ChatActions.UPLOAD_PHOTO)
                 await asyncio.sleep(1)
-                await message.answer_photo(photo=img, caption='@mtkspbbot')
+
+                caption = (
+                    f'Расписание на <b>{selected_date.strftime("%d.%m")}</b> ({week})\n'
+                    f'@mtkspbbot'
+                )
+                await message.answer_photo(photo=img, caption=caption, parse_mode='HTML')
+                file_found = True
             break
-    else:
-        await message.answer_chat_action('typing')
-        await asyncio.sleep(1)
-        await message.answer("Ничего не найдено!")
+
+    if not file_found:
+        for filename in next_month_filenames:
+            if os.path.exists(filename):
+                selected_date = date.replace(day=user_day, month=next_month.month)
+                week = selected_date.strftime("%A")
+
+                with open(filename, 'rb') as img:
+                    await message.answer_chat_action(ChatActions.UPLOAD_PHOTO)
+                    await asyncio.sleep(1)
+
+                    caption = (
+                        f'Расписание на <b>{selected_date.strftime("%d.%m")}</b> ({week})\n'
+                        f'@mtkspbbot'
+                    )
+                    await message.answer_photo(photo=img, caption=caption, parse_mode='HTML')
+                break
+        else:
+            await message.answer_chat_action('typing')
+            await asyncio.sleep(1)
+            await message.answer("Ничего не найдено!")

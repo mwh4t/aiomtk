@@ -34,7 +34,7 @@ async def state1(message: types.Message, state: FSMContext):
     for admin in admins:
         try:
             await dp.bot.send_message(chat_id=admin,
-                                      text=f'<b>Поступил отзыв от @{user}</b> <i>(ID: "{user_id}")</i>:\n'
+                                      text=f'<b>Поступил отзыв от @{user}</b> (ID: "{user_id}"):\n'
                                            f'"{answer}"')
         except Exception as err:
             logging.exception(err)
