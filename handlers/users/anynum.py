@@ -15,8 +15,14 @@ async def any_number(message: types.Message):
     user_day = int(message.text)
 
     date = datetime.now()
-    selected_date = date.replace(day=user_day)
-    week = selected_date.strftime("%A")
+
+    try:
+        selected_date = date.replace(day=user_day)
+    except (ValueError, OverflowError):
+        await message.answer("Не балуйся! 😡")
+        return
+
+    week = selected_date.strftime("%A").lower()
 
     next_month_day = 1
     next_month = date.replace(month=date.month + 1, day=next_month_day)
@@ -85,7 +91,7 @@ async def any_number(message: types.Message):
         for filename in next_month_filenames:
             if os.path.exists(filename):
                 selected_date = date.replace(day=user_day, month=next_month.month)
-                week = selected_date.strftime("%A")
+                week = selected_date.strftime("%A").lower()
 
                 with open(filename, 'rb') as img:
                     await message.answer_chat_action(ChatActions.UPLOAD_PHOTO)

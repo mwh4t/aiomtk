@@ -7,7 +7,7 @@ import logging  # предоставляет способ записи сооб�
 from keyboards.inline import ikb_fb
 from data.config import admins
 import random
-from handlers.users.errors import errors
+from handlers.users.msgs import msgs
 from utils.misc import rate_limit
 
 
@@ -52,5 +52,5 @@ async def answer(message: types.Message):
         await dp.bot.send_message(chat_id=user_id, text=f'<b>Поступил ответ на отзыв</b>:\n'
                                                         f'"{message.text}"')
     else:
-        random_error = random.choice(errors)
-        await message.answer(random_error)
+        random_msg = random.choice(msgs)
+        await message.answer(random_msg)

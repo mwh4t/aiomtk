@@ -20,7 +20,7 @@ async def btn_yesterday(message: types.Message):
     date4 = yesterday_date.strftime('%d-%m-%Y')
     date5 = date6 = yesterday_date.strftime('%d-%m-%y')
 
-    week = yesterday_date.strftime('%A')
+    week = yesterday_date.strftime('%A').lower()
 
     filenames = [
         f"png_files/Расписание%20{date1}.png",
@@ -68,7 +68,7 @@ async def btn_today(message: types.Message):
     date4 = today_date.strftime('%d-%m-%Y')
     date5 = date6 = today_date.strftime('%d-%m-%y')
 
-    week = today_date.strftime('%A')
+    week = today_date.strftime('%A').lower()
 
     filenames = [
         f"png_files/Расписание%20{date1}.png",
@@ -116,7 +116,7 @@ async def btn_tomorrow(message: types.Message):
     date4 = tomorrow_date.strftime('%d-%m-%Y')
     date5 = date6 = tomorrow_date.strftime('%d-%m-%y')
 
-    week = tomorrow_date.strftime('%A')
+    week = tomorrow_date.strftime('%A').lower()
 
     filenames = [
         f"png_files/Расписание%20{date1}.png",
