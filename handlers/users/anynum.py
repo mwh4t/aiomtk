@@ -5,7 +5,10 @@ from datetime import datetime
 import os
 import asyncio
 import locale
+import random
+from handlers.users.msgs import msgs1
 
+# установка локали на русскую
 locale.setlocale(locale.LC_TIME, 'ru_RU.UTF-8')
 
 
@@ -19,7 +22,8 @@ async def any_number(message: types.Message):
     try:
         selected_date = date.replace(day=user_day)
     except (ValueError, OverflowError):
-        await message.answer("Не балуйся! 😡")
+        random_msg = random.choice(msgs1)
+        await message.answer(random_msg)
         return
 
     week = selected_date.strftime("%A").lower()

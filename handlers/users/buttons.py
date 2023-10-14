@@ -7,6 +7,7 @@ import os
 from utils.misc import rate_limit
 import locale
 
+# установка локали на русскую
 locale.setlocale(locale.LC_TIME, 'ru_RU.UTF-8')
 
 

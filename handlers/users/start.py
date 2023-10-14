@@ -1,4 +1,4 @@
-import logging  # предоставляет способ записи сообщений в файл или консоль
+import logging
 from aiogram import types
 from aiogram.types import CallbackQuery
 from keyboards.default import kb_start

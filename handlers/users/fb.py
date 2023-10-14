@@ -7,7 +7,7 @@ import logging  # предоставляет способ записи сооб�
 from keyboards.inline import ikb_fb
 from data.config import admins
 import random
-from handlers.users.msgs import msgs
+from handlers.users.msgs import msgs2
 from utils.misc import rate_limit
 
 
@@ -30,11 +30,11 @@ async def state1(message: types.Message, state: FSMContext):
     user_id = message.from_user.id
     answer = message.text
     await state.finish()  # сбрасывает состояние диалога
-    await message.answer('Отзыв отправлен!')
+    await message.answer('Сообщение отправлено!')
     for admin in admins:
         try:
             await dp.bot.send_message(chat_id=admin,
-                                      text=f'<b>Поступил отзыв от @{user}</b> (ID: "{user_id}"):\n'
+                                      text=f'<b>Поступило сообщение от @{user}</b> (ID: "{user_id}"):\n'
                                            f'"{answer}"')
         except Exception as err:
             logging.exception(err)
@@ -49,8 +49,8 @@ async def answer(message: types.Message):
                 await dp.bot.send_message(chat_id=admin, text='Ответ отправлен!')
             except Exception as err:
                 logging.exception(err)
-        await dp.bot.send_message(chat_id=user_id, text=f'<b>Поступил ответ на отзыв</b>:\n'
+        await dp.bot.send_message(chat_id=user_id, text=f'<b>Поступил ответ на сообщение</b>:\n'
                                                         f'"{message.text}"')
     else:
-        random_msg = random.choice(msgs)
+        random_msg = random.choice(msgs2)
         await message.answer(random_msg)

@@ -46,10 +46,11 @@ async def download_and_convert_pdfs(url):
     if not os.path.exists(png_folder):
         os.makedirs(png_folder)
 
+    # шаблон для поиска ссылок на PDF файлы в HTML-коде
     pattern = re.compile(r'href="(?P<link>/[^\"]+\.(?i:pdf))"')
 
     connector = aiohttp.TCPConnector(ssl=False)  # отключение проверки SSL
-    async with aiohttp.ClientSession(connector=connector) as session:
+    async with aiohttp.ClientSession(connector=connector, trust_env=True) as session:
         async with session.get(url) as response:
             text = await response.text()
             matches = pattern.findall(text)
@@ -100,7 +101,7 @@ async def repeat_actions():
         await asyncio.sleep(4 * 3600)
 
 
-if __name__ == '__main__':  # проверка, выполняется ли скрипт как основная программа
+if __name__ == '__main__':
     from aiogram import executor
     from handlers import dp
 
