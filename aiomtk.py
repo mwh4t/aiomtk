@@ -69,12 +69,16 @@ async def download_and_convert_pdfs(url):
                         # конвертирование PDF в PNG
                         dpi = 100
                         zoom = dpi / 72
-                        magnify = fitz.Matrix(zoom, zoom)
+                        # magnify = fitz.Matrix(zoom, zoom)
                         pdf_document = fitz.open(pdf_filename)
-                        page = pdf_document[0]
-                        image = page.get_pixmap(matrix=magnify)
-                        image.save(os.path.join(png_folder, os.path.splitext(os.path.basename(pdf_link))[0] + '.png'),
-                                   'PNG')
+
+                        for page_number in range(len(pdf_document)):
+                            page = pdf_document[page_number]
+                            magnify = fitz.Matrix(zoom, zoom)
+                            image = page.get_pixmap(matrix=magnify)
+                            image.save(os.path.join(png_folder,
+                                                    f"{os.path.splitext(os.path.basename(pdf_link))[0]}_page{page_number + 1}.png"),
+                                       'PNG')
 
                         # удаление PDF
                         os.remove(pdf_filename)

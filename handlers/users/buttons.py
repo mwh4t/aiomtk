@@ -1,14 +1,26 @@
 from aiogram import types
-from aiogram.types import ChatActions
+from aiogram.types import ChatActions, InputMediaPhoto
 from loader import dp
 from datetime import datetime, timedelta
 import asyncio
 import os
+import io
 from utils.misc import rate_limit
 import locale
 
 # установка локали на русскую
 locale.setlocale(locale.LC_TIME, 'ru_RU.UTF-8')
+
+filenames = [
+    "png_files/Расписание%20",
+    "png_files/Расписание%2",
+    "png_files/Расписание%20на%20",
+    "png_files/Расписание%20на%2",
+    "png_files/Расписание%20на%20-1",
+    "png_files/Расписание%20на%2-1"
+]
+
+suffixes = ["_page1", "_page2", "_page3", "_page4"]
 
 
 @rate_limit(limit=10)
@@ -23,36 +35,30 @@ async def btn_yesterday(message: types.Message):
 
     week = yesterday_date.strftime('%A').lower()
 
-    filenames = [
-        f"png_files/Расписание%20{date1}.png",
-        f"png_files/Расписание%20{date2}.png",
-        f"png_files/Расписание%2{date3}.png",
-        f"png_files/Расписание%20{date4}.png",
-        f"png_files/Расписание%20{date5}.png",
-        f"png_files/Расписание%2{date6}.png",
-        f"png_files/Расписание%20на%20{date1}.png",
-        f"png_files/Расписание%20на%20{date2}.png",
-        f"png_files/Расписание%20на%2{date3}.png",
-        f"png_files/Расписание%20на%20{date4}.png",
-        f"png_files/Расписание%20на%20{date5}.png",
-        f"png_files/Расписание%20на%2{date6}.png",
-        f"png_files/Расписание%20на%20{date1}-1.png",
-        f"png_files/Расписание%20на%20{date2}-1.png",
-        f"png_files/Расписание%20на%2{date3}-1.png",
-        f"png_files/Расписание%20на%20{date4}-1.png",
-        f"png_files/Расписание%20на%20{date5}-1.png",
-        f"png_files/Расписание%20на%2{date6}-1.png"
-    ]
-
+    new_filenames = []
     for filename in filenames:
-        if os.path.exists(filename):
-            with open(filename, 'rb') as img:
+        for date in (date1, date2, date3, date4, date5, date6):
+            for suffix in suffixes:
+                new_filenames.append(f"{filename}{date}{suffix}.png")
+                new_filenames.append(f"{filename}{date}.png")
+
+    found_files = False  # флаг для проверки, найден ли файл
+    album = []
+    for index, new_filename in enumerate(new_filenames):
+        if os.path.exists(new_filename):
+            found_files = True  # флаг для проверки, найден ли файл
+            with open(new_filename, 'rb') as photo_file:
                 await message.answer_chat_action(ChatActions.UPLOAD_PHOTO)
-                await asyncio.sleep(1)
-                await message.answer_photo(photo=img,
-                                           caption=f'Расписание на <b>{yesterday_date.strftime("%d.%m")}</b> ({week})\n'
-                                                   f'@mtkspbbot')
-            break
+                # await asyncio.sleep(1)
+                # преобразование содержимого файла в бинарный формат
+                photo_binary = io.BytesIO(photo_file.read())
+                caption = (f'Расписание на <b>{yesterday_date.strftime("%d.%m")}</b> ({week})\n'
+                           f'@mtkspbbot') if index == 0 else None
+                media = InputMediaPhoto(media=photo_binary, caption=caption)
+                album.append(media)
+
+    if found_files:
+        await message.answer_media_group(media=album)
     else:
         await message.answer_chat_action('typing')
         await asyncio.sleep(1)
@@ -71,36 +77,30 @@ async def btn_today(message: types.Message):
 
     week = today_date.strftime('%A').lower()
 
-    filenames = [
-        f"png_files/Расписание%20{date1}.png",
-        f"png_files/Расписание%20{date2}.png",
-        f"png_files/Расписание%2{date3}.png",
-        f"png_files/Расписание%20{date4}.png",
-        f"png_files/Расписание%20{date5}.png",
-        f"png_files/Расписание%2{date6}.png",
-        f"png_files/Расписание%20на%20{date1}.png",
-        f"png_files/Расписание%20на%20{date2}.png",
-        f"png_files/Расписание%20на%2{date3}.png",
-        f"png_files/Расписание%20на%20{date4}.png",
-        f"png_files/Расписание%20на%20{date5}.png",
-        f"png_files/Расписание%20на%2{date6}.png",
-        f"png_files/Расписание%20на%20{date1}-1.png",
-        f"png_files/Расписание%20на%20{date2}-1.png",
-        f"png_files/Расписание%20на%2{date3}-1.png",
-        f"png_files/Расписание%20на%20{date4}-1.png",
-        f"png_files/Расписание%20на%20{date5}-1.png",
-        f"png_files/Расписание%20на%2{date6}-1.png"
-    ]
-
+    new_filenames = []
     for filename in filenames:
-        if os.path.exists(filename):
-            with open(filename, 'rb') as img:
+        for date in (date1, date2, date3, date4, date5, date6):
+            for suffix in suffixes:
+                new_filenames.append(f"{filename}{date}{suffix}.png")
+                new_filenames.append(f"{filename}{date}.png")
+
+    found_files = False  # флаг для проверки, найден ли файл
+    album = []
+    for index, new_filename in enumerate(new_filenames):
+        if os.path.exists(new_filename):
+            found_files = True  # флаг для проверки, найден ли файл
+            with open(new_filename, 'rb') as photo_file:
                 await message.answer_chat_action(ChatActions.UPLOAD_PHOTO)
-                await asyncio.sleep(1)
-                await message.answer_photo(photo=img,
-                                           caption=f'Расписание на <b>{today_date.strftime("%d.%m")}</b> ({week})\n'
-                                                   f'@mtkspbbot')
-            break
+                # await asyncio.sleep(1)
+                # преобразование содержимого файла в бинарный формат
+                photo_binary = io.BytesIO(photo_file.read())
+                caption = (f'Расписание на <b>{today_date.strftime("%d.%m")}</b> ({week})\n'
+                           f'@mtkspbbot') if index == 0 else None
+                media = InputMediaPhoto(media=photo_binary, caption=caption)
+                album.append(media)
+
+    if found_files:
+        await message.answer_media_group(media=album)
     else:
         await message.answer_chat_action('typing')
         await asyncio.sleep(1)
@@ -119,36 +119,30 @@ async def btn_tomorrow(message: types.Message):
 
     week = tomorrow_date.strftime('%A').lower()
 
-    filenames = [
-        f"png_files/Расписание%20{date1}.png",
-        f"png_files/Расписание%20{date2}.png",
-        f"png_files/Расписание%2{date3}.png",
-        f"png_files/Расписание%20{date4}.png",
-        f"png_files/Расписание%20{date5}.png",
-        f"png_files/Расписание%2{date6}.png",
-        f"png_files/Расписание%20на%20{date1}.png",
-        f"png_files/Расписание%20на%20{date2}.png",
-        f"png_files/Расписание%20на%2{date3}.png",
-        f"png_files/Расписание%20на%20{date4}.png",
-        f"png_files/Расписание%20на%20{date5}.png",
-        f"png_files/Расписание%20на%2{date6}.png",
-        f"png_files/Расписание%20на%20{date1}-1.png",
-        f"png_files/Расписание%20на%20{date2}-1.png",
-        f"png_files/Расписание%20на%2{date3}-1.png",
-        f"png_files/Расписание%20на%20{date4}-1.png",
-        f"png_files/Расписание%20на%20{date5}-1.png",
-        f"png_files/Расписание%20на%2{date6}-1.png"
-    ]
-
+    new_filenames = []
     for filename in filenames:
-        if os.path.exists(filename):
-            with open(filename, 'rb') as img:
+        for date in (date1, date2, date3, date4, date5, date6):
+            for suffix in suffixes:
+                new_filenames.append(f"{filename}{date}{suffix}.png")
+                new_filenames.append(f"{filename}{date}.png")
+
+    found_files = False  # флаг для проверки, найден ли файл
+    album = []
+    for index, new_filename in enumerate(new_filenames):
+        if os.path.exists(new_filename):
+            found_files = True  # флаг для проверки, найден ли файл
+            with open(new_filename, 'rb') as photo_file:
                 await message.answer_chat_action(ChatActions.UPLOAD_PHOTO)
-                await asyncio.sleep(1)
-                await message.answer_photo(photo=img,
-                                           caption=f'Расписание на <b>{tomorrow_date.strftime("%d.%m")}</b> ({week})\n'
-                                                   f'@mtkspbbot')
-            break
+                # await asyncio.sleep(1)
+                # преобразование содержимого файла в бинарный формат
+                photo_binary = io.BytesIO(photo_file.read())
+                caption = (f'Расписание на <b>{tomorrow_date.strftime("%d.%m")}</b> ({week})\n'
+                           f'@mtkspbbot') if index == 0 else None
+                media = InputMediaPhoto(media=photo_binary, caption=caption)
+                album.append(media)
+
+    if found_files:
+        await message.answer_media_group(media=album)
     else:
         await message.answer_chat_action('typing')
         await asyncio.sleep(1)

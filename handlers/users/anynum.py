@@ -1,8 +1,9 @@
 from aiogram import types
-from aiogram.types import ChatActions
+from aiogram.types import ChatActions, InputMediaPhoto
 from loader import dp
 from datetime import datetime
 import os
+import io
 import asyncio
 import locale
 import random
@@ -19,6 +20,7 @@ async def any_number(message: types.Message):
 
     date = datetime.now()
 
+    # обработчик для чисел выше, чем в текущем месяце
     try:
         selected_date = date.replace(day=user_day)
     except (ValueError, OverflowError):
@@ -26,87 +28,83 @@ async def any_number(message: types.Message):
         await message.answer(random_msg)
         return
 
-    week = selected_date.strftime("%A").lower()
-
     next_month_day = 1
     next_month = date.replace(month=date.month + 1, day=next_month_day)
     if date.month == 12:
         next_month = next_month.replace(month=1, year=date.year + 1)
 
     filenames = [
-        f"png_files/Расписание%20{message.text:0>2}.{date.month:0>2}.{date.year}.png",
-        f"png_files/Расписание%20{message.text:0>2}.{date.month:0>2}.{date.year % 100}.png",
-        f"png_files/Расписание%2{message.text:0>2}.{date.month:0>2}.{date.year % 100}.png",
-        f"png_files/Расписание%20{message.text:0>2}-{date.month:0>2}-{date.year}.png",
-        f"png_files/Расписание%20{message.text:0>2}-{date.month:0>2}-{date.year % 100}.png",
-        f"png_files/Расписание%2{message.text:0>2}-{date.month:0>2}-{date.year % 100}.png",
-        f"png_files/Расписание%20на%20{message.text:0>2}.{date.month:0>2}.{date.year}.png",
-        f"png_files/Расписание%20на%20{message.text:0>2}.{date.month:0>2}.{date.year % 100}.png",
-        f"png_files/Расписание%20на%2{message.text:0>2}.{date.month:0>2}.{date.year % 100}.png",
-        f"png_files/Расписание%20на%20{message.text:0>2}-{date.month:0>2}-{date.year}.png",
-        f"png_files/Расписание%20на%20{message.text:0>2}-{date.month:0>2}-{date.year % 100}.png",
-        f"png_files/Расписание%20на%2{message.text:0>2}-{date.month:0>2}-{date.year % 100}.png",
-        f"png_files/Расписание%20на%20{message.text:0>2}.{date.month:0>2}.{date.year}-1.png",
-        f"png_files/Расписание%20на%20{message.text:0>2}.{date.month:0>2}.{date.year % 100}-1.png",
-        f"png_files/Расписание%20на%2{message.text:0>2}.{date.month:0>2}.{date.year % 100}-1.png",
-        f"png_files/Расписание%20на%20{message.text:0>2}-{date.month:0>2}-{date.year}-1.png",
-        f"png_files/Расписание%20на%20{message.text:0>2}-{date.month:0>2}-{date.year % 100}-1.png",
-        f"png_files/Расписание%20на%2{message.text:0>2}-{date.month:0>2}-{date.year % 100}-1.png"
+        "png_files/Расписание%20",
+        "png_files/Расписание%2",
+        "png_files/Расписание%20на%20",
+        "png_files/Расписание%20на%2",
+        "png_files/Расписание%20на%20-1",
+        "png_files/Расписание%20на%2-1",
     ]
 
-    next_month_filenames = [
-        f"png_files/Расписание%20{message.text:0>2}.{next_month.month:0>2}.{date.year}.png",
-        f"png_files/Расписание%20{message.text:0>2}.{next_month.month:0>2}.{date.year % 100}.png",
-        f"png_files/Расписание%2{message.text:0>2}.{next_month.month:0>2}.{date.year % 100}.png",
-        f"png_files/Расписание%20{message.text:0>2}-{next_month.month:0>2}-{date.year}.png",
-        f"png_files/Расписание%20{message.text:0>2}-{next_month.month:0>2}-{date.year % 100}.png",
-        f"png_files/Расписание%2{message.text:0>2}-{next_month.month:0>2}-{date.year % 100}.png",
-        f"png_files/Расписание%20на%20{message.text:0>2}.{next_month.month:0>2}.{date.year}.png",
-        f"png_files/Расписание%20на%20{message.text:0>2}.{next_month.month:0>2}.{date.year % 100}.png",
-        f"png_files/Расписание%20на%2{message.text:0>2}.{next_month.month:0>2}.{date.year % 100}.png",
-        f"png_files/Расписание%20на%20{message.text:0>2}-{next_month.month:0>2}-{date.year}.png",
-        f"png_files/Расписание%20на%20{message.text:0>2}-{next_month.month:0>2}-{date.year % 100}.png",
-        f"png_files/Расписание%20на%2{message.text:0>2}-{next_month.month:0>2}-{date.year % 100}.png",
-        f"png_files/Расписание%20на%20{message.text:0>2}.{next_month.month:0>2}.{date.year}-1.png",
-        f"png_files/Расписание%20на%20{message.text:0>2}.{next_month.month:0>2}.{date.year % 100}-1.png",
-        f"png_files/Расписание%20на%2{message.text:0>2}.{next_month.month:0>2}.{date.year % 100}-1.png",
-        f"png_files/Расписание%20на%20{message.text:0>2}-{next_month.month:0>2}-{date.year}-1.png",
-        f"png_files/Расписание%20на%20{message.text:0>2}-{next_month.month:0>2}-{date.year % 100}-1.png",
-        f"png_files/Расписание%20на%2{message.text:0>2}-{next_month.month:0>2}-{date.year % 100}-1.png"
-    ]
+    suffixes = ["_page1", "_page2", "_page3", "_page4"]
 
-    file_found = False  # флаг для проверки, был ли найден файл
-
+    new_filenames = []
+    new_next_month_filenames = []
     for filename in filenames:
-        if os.path.exists(filename):
-            with open(filename, 'rb') as img:
+        for suffix in suffixes:
+            # элементы списка для текущего месяца
+            new_filenames.append(f"{filename}{message.text:0>2}.{date.month:0>2}.{date.year}{suffix}.png")
+            new_filenames.append(f"{filename}{message.text:0>2}.{date.month:0>2}.{date.year % 100}{suffix}.png")
+            new_filenames.append(f"{filename}{message.text:0>2}-{date.month:0>2}-{date.year}{suffix}.png")
+            new_filenames.append(f"{filename}{message.text:0>2}-{date.month:0>2}-{date.year % 100}{suffix}.png")
+
+            # элементы списка для следующего месяца
+            new_next_month_filenames.append(
+                f"{filename}{message.text:0>2}.{next_month.month:0>2}.{date.year}{suffix}.png")
+            new_next_month_filenames.append(
+                f"{filename}{message.text:0>2}.{next_month.month:0>2}.{date.year % 100}{suffix}.png")
+            new_next_month_filenames.append(
+                f"{filename}{message.text:0>2}-{next_month.month:0>2}-{date.year}{suffix}.png")
+            new_next_month_filenames.append(
+                f"{filename}{message.text:0>2}-{next_month.month:0>2}-{date.year % 100}{suffix}.png")
+
+    album = []
+    # отправка стопки для текущего месяца
+    found_files = False  # флаг для проверки, найден ли файл
+    for index, new_filename in enumerate(new_filenames):
+        if os.path.exists(new_filename):
+            found_files = True  # флаг для проверки, найден ли файл
+            with open(new_filename, 'rb') as photo_file:
                 await message.answer_chat_action(ChatActions.UPLOAD_PHOTO)
-                await asyncio.sleep(1)
-
-                caption = (
-                    f'Расписание на <b>{selected_date.strftime("%d.%m")}</b> ({week})\n'
-                    f'@mtkspbbot'
-                )
-                await message.answer_photo(photo=img, caption=caption, parse_mode='HTML')
-                file_found = True
-            break
-
-    if not file_found:
-        for filename in next_month_filenames:
-            if os.path.exists(filename):
-                selected_date = date.replace(day=user_day, month=next_month.month)
+                # await asyncio.sleep(1)
+                # преобразование содержимого файла в бинарный формат
+                photo_binary = io.BytesIO(photo_file.read())
                 week = selected_date.strftime("%A").lower()
+                caption = (f'Расписание на <b>{selected_date.strftime("%d.%m")}</b> ({week})\n'
+                           f'@mtkspbbot') if index == 0 else None
 
-                with open(filename, 'rb') as img:
+                media = InputMediaPhoto(media=photo_binary, caption=caption)
+                album.append(media)
+
+    if found_files:
+        await message.answer_media_group(media=album)
+    else:
+        # отправка стопки для следующего месяца
+        found_files1 = False  # флаг для проверки, найден ли файл
+        for index, new_next_month_filename in enumerate(new_next_month_filenames):
+            if os.path.exists(new_next_month_filename):
+                found_files1 = True  # флаг для проверки, найден ли файл
+                with open(new_next_month_filename, 'rb') as photo_file:
                     await message.answer_chat_action(ChatActions.UPLOAD_PHOTO)
-                    await asyncio.sleep(1)
+                    # await asyncio.sleep(1)
+                    # преобразование содержимого файла в бинарный формат
+                    photo_binary = io.BytesIO(photo_file.read())
+                    selected_date = date.replace(day=user_day, month=next_month.month)
+                    week = selected_date.strftime("%A").lower()
+                    caption = (f'Расписание на <b>{selected_date.strftime("%d.%m")}</b> ({week})\n'
+                               f'@mtkspbbot') if index == 0 else None
 
-                    caption = (
-                        f'Расписание на <b>{selected_date.strftime("%d.%m")}</b> ({week})\n'
-                        f'@mtkspbbot'
-                    )
-                    await message.answer_photo(photo=img, caption=caption, parse_mode='HTML')
-                break
+                    media = InputMediaPhoto(media=photo_binary, caption=caption)
+                    album.append(media)
+
+        if found_files1:
+            await message.answer_media_group(media=album)
         else:
             await message.answer_chat_action('typing')
             await asyncio.sleep(1)
