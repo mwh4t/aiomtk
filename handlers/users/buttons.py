@@ -40,22 +40,25 @@ async def btn_yesterday(message: types.Message):
         for date in (date1, date2, date3, date4, date5, date6):
             for suffix in suffixes:
                 new_filenames.append(f"{filename}{date}{suffix}.png")
-                new_filenames.append(f"{filename}{date}.png")
 
-    found_files = False  # флаг для проверки, найден ли файл
     album = []
-    for index, new_filename in enumerate(new_filenames):
+    found_files = False  # флаг для проверки, найден ли файл
+    caption_set = False  # флаг для отслеживания, был ли уже установлен caption
+
+    for new_filename in new_filenames:
         if os.path.exists(new_filename):
             found_files = True  # флаг для проверки, найден ли файл
             with open(new_filename, 'rb') as photo_file:
                 await message.answer_chat_action(ChatActions.UPLOAD_PHOTO)
-                # await asyncio.sleep(1)
+                await asyncio.sleep(0.3)
                 # преобразование содержимого файла в бинарный формат
                 photo_binary = io.BytesIO(photo_file.read())
                 caption = (f'Расписание на <b>{yesterday_date.strftime("%d.%m")}</b> ({week})\n'
-                           f'@mtkspbbot') if index == 0 else None
+                           f'@mtkspbbot') if not caption_set else None
                 media = InputMediaPhoto(media=photo_binary, caption=caption)
                 album.append(media)
+
+                caption_set = True  # флаг для отслеживания, был ли уже установлен caption
 
     if found_files:
         await message.answer_media_group(media=album)
@@ -82,22 +85,25 @@ async def btn_today(message: types.Message):
         for date in (date1, date2, date3, date4, date5, date6):
             for suffix in suffixes:
                 new_filenames.append(f"{filename}{date}{suffix}.png")
-                new_filenames.append(f"{filename}{date}.png")
 
-    found_files = False  # флаг для проверки, найден ли файл
     album = []
-    for index, new_filename in enumerate(new_filenames):
+    found_files = False  # флаг для проверки, найден ли файл
+    caption_set = False  # флаг для отслеживания, был ли уже установлен caption
+
+    for new_filename in new_filenames:
         if os.path.exists(new_filename):
             found_files = True  # флаг для проверки, найден ли файл
             with open(new_filename, 'rb') as photo_file:
                 await message.answer_chat_action(ChatActions.UPLOAD_PHOTO)
-                # await asyncio.sleep(1)
+                await asyncio.sleep(0.3)
                 # преобразование содержимого файла в бинарный формат
                 photo_binary = io.BytesIO(photo_file.read())
                 caption = (f'Расписание на <b>{today_date.strftime("%d.%m")}</b> ({week})\n'
-                           f'@mtkspbbot') if index == 0 else None
+                           f'@mtkspbbot') if not caption_set else None
                 media = InputMediaPhoto(media=photo_binary, caption=caption)
                 album.append(media)
+
+                caption_set = True  # флаг для отслеживания, был ли уже установлен caption
 
     if found_files:
         await message.answer_media_group(media=album)
@@ -124,22 +130,25 @@ async def btn_tomorrow(message: types.Message):
         for date in (date1, date2, date3, date4, date5, date6):
             for suffix in suffixes:
                 new_filenames.append(f"{filename}{date}{suffix}.png")
-                new_filenames.append(f"{filename}{date}.png")
 
-    found_files = False  # флаг для проверки, найден ли файл
     album = []
-    for index, new_filename in enumerate(new_filenames):
+    found_files = False  # флаг для проверки, найден ли файл
+    caption_set = False  # флаг для отслеживания, был ли уже установлен caption
+
+    for new_filename in new_filenames:
         if os.path.exists(new_filename):
             found_files = True  # флаг для проверки, найден ли файл
             with open(new_filename, 'rb') as photo_file:
                 await message.answer_chat_action(ChatActions.UPLOAD_PHOTO)
-                # await asyncio.sleep(1)
+                await asyncio.sleep(0.3)
                 # преобразование содержимого файла в бинарный формат
                 photo_binary = io.BytesIO(photo_file.read())
                 caption = (f'Расписание на <b>{tomorrow_date.strftime("%d.%m")}</b> ({week})\n'
-                           f'@mtkspbbot') if index == 0 else None
+                           f'@mtkspbbot') if not caption_set else None
                 media = InputMediaPhoto(media=photo_binary, caption=caption)
                 album.append(media)
+
+                caption_set = True  # флаг для отслеживания, был ли уже установлен caption
 
     if found_files:
         await message.answer_media_group(media=album)
