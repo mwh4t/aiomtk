@@ -29,15 +29,15 @@ async def btn_yesterday(message: types.Message):
     yesterday_date = datetime.now() - timedelta(1)
 
     date1 = yesterday_date.strftime('%d.%m.%Y')
-    date2 = date3 = yesterday_date.strftime('%d.%m.%y')
-    date4 = yesterday_date.strftime('%d-%m-%Y')
-    date5 = date6 = yesterday_date.strftime('%d-%m-%y')
+    date2 = yesterday_date.strftime('%d.%m.%y')
+    date3 = yesterday_date.strftime('%d-%m-%Y')
+    date4 = yesterday_date.strftime('%d-%m-%y')
 
     week = yesterday_date.strftime('%A').lower()
 
     new_filenames = []
     for filename in filenames:
-        for date in (date1, date2, date3, date4, date5, date6):
+        for date in (date1, date2, date3, date4):
             for suffix in suffixes:
                 new_filenames.append(f"{filename}{date}{suffix}.png")
 
@@ -53,8 +53,10 @@ async def btn_yesterday(message: types.Message):
                 await asyncio.sleep(0.3)
                 # преобразование содержимого файла в бинарный формат
                 photo_binary = io.BytesIO(photo_file.read())
+
                 caption = (f'Расписание на <b>{yesterday_date.strftime("%d.%m")}</b> ({week})\n'
                            f'@mtkspbbot') if not caption_set else None
+
                 media = InputMediaPhoto(media=photo_binary, caption=caption)
                 album.append(media)
 
@@ -74,15 +76,15 @@ async def btn_today(message: types.Message):
     today_date = datetime.now()
 
     date1 = today_date.strftime('%d.%m.%Y')
-    date2 = date3 = today_date.strftime('%d.%m.%y')
-    date4 = today_date.strftime('%d-%m-%Y')
-    date5 = date6 = today_date.strftime('%d-%m-%y')
+    date2 = today_date.strftime('%d.%m.%y')
+    date3 = today_date.strftime('%d-%m-%Y')
+    date4 = today_date.strftime('%d-%m-%y')
 
     week = today_date.strftime('%A').lower()
 
     new_filenames = []
     for filename in filenames:
-        for date in (date1, date2, date3, date4, date5, date6):
+        for date in (date1, date2, date3, date4):
             for suffix in suffixes:
                 new_filenames.append(f"{filename}{date}{suffix}.png")
 
@@ -98,8 +100,10 @@ async def btn_today(message: types.Message):
                 await asyncio.sleep(0.3)
                 # преобразование содержимого файла в бинарный формат
                 photo_binary = io.BytesIO(photo_file.read())
+
                 caption = (f'Расписание на <b>{today_date.strftime("%d.%m")}</b> ({week})\n'
                            f'@mtkspbbot') if not caption_set else None
+
                 media = InputMediaPhoto(media=photo_binary, caption=caption)
                 album.append(media)
 
@@ -119,15 +123,15 @@ async def btn_tomorrow(message: types.Message):
     tomorrow_date = datetime.now() + timedelta(1)
 
     date1 = tomorrow_date.strftime('%d.%m.%Y')
-    date2 = date3 = tomorrow_date.strftime('%d.%m.%y')
-    date4 = tomorrow_date.strftime('%d-%m-%Y')
-    date5 = date6 = tomorrow_date.strftime('%d-%m-%y')
+    date2 = tomorrow_date.strftime('%d.%m.%y')
+    date3 = tomorrow_date.strftime('%d-%m-%Y')
+    date4 = tomorrow_date.strftime('%d-%m-%y')
 
     week = tomorrow_date.strftime('%A').lower()
 
     new_filenames = []
     for filename in filenames:
-        for date in (date1, date2, date3, date4, date5, date6):
+        for date in (date1, date2, date3, date4):
             for suffix in suffixes:
                 new_filenames.append(f"{filename}{date}{suffix}.png")
 
@@ -143,8 +147,10 @@ async def btn_tomorrow(message: types.Message):
                 await asyncio.sleep(0.3)
                 # преобразование содержимого файла в бинарный формат
                 photo_binary = io.BytesIO(photo_file.read())
+
                 caption = (f'Расписание на <b>{tomorrow_date.strftime("%d.%m")}</b> ({week})\n'
                            f'@mtkspbbot') if not caption_set else None
+
                 media = InputMediaPhoto(media=photo_binary, caption=caption)
                 album.append(media)
 
