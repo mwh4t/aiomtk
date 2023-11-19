@@ -42,27 +42,32 @@ async def any_number(message: types.Message):
         "png_files/Расписание%20на%2-1",
     ]
 
+    additions = ["", "-объединены"]
+
     suffixes = ["_page1", "_page2", "_page3", "_page4"]
 
     new_filenames = []
     new_next_month_filenames = []
     for filename in filenames:
-        for suffix in suffixes:
-            # элементы списка для текущего месяца
-            new_filenames.append(f"{filename}{message.text:0>2}.{date.month:0>2}.{date.year}{suffix}.png")
-            new_filenames.append(f"{filename}{message.text:0>2}.{date.month:0>2}.{date.year % 100}{suffix}.png")
-            new_filenames.append(f"{filename}{message.text:0>2}-{date.month:0>2}-{date.year}{suffix}.png")
-            new_filenames.append(f"{filename}{message.text:0>2}-{date.month:0>2}-{date.year % 100}{suffix}.png")
+        for addition in additions:
+            for suffix in suffixes:
+                # элементы списка для текущего месяца
+                new_filenames.append(f"{filename}{message.text:0>2}.{date.month:0>2}.{date.year}{addition}{suffix}.png")
+                new_filenames.append(
+                    f"{filename}{message.text:0>2}.{date.month:0>2}.{date.year % 100}{addition}{suffix}.png")
+                new_filenames.append(f"{filename}{message.text:0>2}-{date.month:0>2}-{date.year}{addition}{suffix}.png")
+                new_filenames.append(
+                    f"{filename}{message.text:0>2}-{date.month:0>2}-{date.year % 100}{addition}{suffix}.png")
 
-            # элементы списка для следующего месяца
-            new_next_month_filenames.append(
-                f"{filename}{message.text:0>2}.{next_month.month:0>2}.{date.year}{suffix}.png")
-            new_next_month_filenames.append(
-                f"{filename}{message.text:0>2}.{next_month.month:0>2}.{date.year % 100}{suffix}.png")
-            new_next_month_filenames.append(
-                f"{filename}{message.text:0>2}-{next_month.month:0>2}-{date.year}{suffix}.png")
-            new_next_month_filenames.append(
-                f"{filename}{message.text:0>2}-{next_month.month:0>2}-{date.year % 100}{suffix}.png")
+                # элементы списка для следующего месяца
+                new_next_month_filenames.append(
+                    f"{filename}{message.text:0>2}.{next_month.month:0>2}.{date.year}{addition}{suffix}.png")
+                new_next_month_filenames.append(
+                    f"{filename}{message.text:0>2}.{next_month.month:0>2}.{date.year % 100}{addition}{suffix}.png")
+                new_next_month_filenames.append(
+                    f"{filename}{message.text:0>2}-{next_month.month:0>2}-{date.year}{addition}{suffix}.png")
+                new_next_month_filenames.append(
+                    f"{filename}{message.text:0>2}-{next_month.month:0>2}-{date.year % 100}{addition}{suffix}.png")
 
     album = []
     # отправка стопки для текущего месяца

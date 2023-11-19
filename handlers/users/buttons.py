@@ -20,6 +20,8 @@ filenames = [
     "png_files/Расписание%20на%2-1"
 ]
 
+additions = ["", "-объединены"]
+
 suffixes = ["_page1", "_page2", "_page3", "_page4"]
 
 
@@ -38,8 +40,9 @@ async def btn_yesterday(message: types.Message):
     new_filenames = []
     for filename in filenames:
         for date in (date1, date2, date3, date4):
-            for suffix in suffixes:
-                new_filenames.append(f"{filename}{date}{suffix}.png")
+            for addition in additions:
+                for suffix in suffixes:
+                    new_filenames.append(f"{filename}{date}{addition}{suffix}.png")
 
     album = []
     found_files = False  # флаг для проверки, найден ли файл
@@ -85,8 +88,9 @@ async def btn_today(message: types.Message):
     new_filenames = []
     for filename in filenames:
         for date in (date1, date2, date3, date4):
-            for suffix in suffixes:
-                new_filenames.append(f"{filename}{date}{suffix}.png")
+            for addition in additions:
+                for suffix in suffixes:
+                    new_filenames.append(f"{filename}{date}{addition}{suffix}.png")
 
     album = []
     found_files = False  # флаг для проверки, найден ли файл
@@ -132,8 +136,9 @@ async def btn_tomorrow(message: types.Message):
     new_filenames = []
     for filename in filenames:
         for date in (date1, date2, date3, date4):
-            for suffix in suffixes:
-                new_filenames.append(f"{filename}{date}{suffix}.png")
+            for addition in additions:
+                for suffix in suffixes:
+                    new_filenames.append(f"{filename}{date}{addition}{suffix}.png")
 
     album = []
     found_files = False  # флаг для проверки, найден ли файл

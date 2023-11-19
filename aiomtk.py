@@ -77,8 +77,8 @@ async def download_and_convert_pdfs(url):
                             magnify = fitz.Matrix(zoom, zoom)
                             image = page.get_pixmap(matrix=magnify)
                             image.save(os.path.join(png_folder,
-                                                    f"{os.path.splitext(os.path.basename(pdf_link))[0]}_page{page_number + 1}.png"),
-                                       'PNG')
+                                                    f"{os.path.splitext(os.path.basename(pdf_link))[0]}"
+                                                    f"_page{page_number + 1}.png"), 'PNG')
 
                         # удаление PDF
                         os.remove(pdf_filename)
